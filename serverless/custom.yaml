@@ -1,0 +1,9 @@
+firebaseNameList:
+  dev: dev-firebase-name
+  prod: prod-firebase-name
+firebaseName: ${self:custom.firebaseNameList.${self:provider.stage}}
+
+siteList:
+  dev: https://dev.site.me
+  prod: https://www.site.me
+site: ${self:custom.siteList.${self:provider.stage}}

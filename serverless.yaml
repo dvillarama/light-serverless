@@ -1,0 +1,78 @@
+service: light-serverless
+
+custom: ${file(./serverless/custom.yaml)}
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-west-1
+  versionFunctions: false
+  logs:
+    httpApi: true
+  tracing:
+    apiGateway: true
+    lambda: true
+  deploymentBucket: light-serverless-deployment
+  firebaseName: ${self:custom.firebaseName}
+  environment: ${file(./serverless/environment.yaml)}
+  httpApi:
+    cors:
+      allowedOrigins:
+        - http://localhost:3001
+        - https://dev.site.me
+        - https://www.site.me
+      allowedMethods:
+        - OPTIONS
+        - GET
+        - POST
+        - PATCH
+        - DELETE
+        - PUT
+    payload: "2.0"
+    authorizers:
+      firebaseJwtAuthorizer:
+        identitySource: $request.header.authorization
+        issuerUrl: https://securetoken.google.com/${self:provider.firebaseName}
+        audience:
+          - ${self:provider.firebaseName}
+  iamManagedPolicies:
+    - arn:aws:iam::674098831554:policy/dbProxyAccess
+
+package: ${file(./serverless/exclude.yaml)}
+
+functions:
+  usersCreate:
+    handler: src/routes/users.create
+    events:
+      - httpApi:
+          method: POST
+          path: /v1/users
+          authorizer:
+            name: firebaseJwtAuthorizer
+
+  usersGet:
+    handler: src/routes/users.get
+    events:
+      - httpApi:
+          method: GET
+          path: /v1/users/{id}
+          authorizer:
+            name: firebaseJwtAuthorizer
+
+  usersUpdate:
+    handler: src/routes/users.update
+    events:
+      - httpApi:
+          method: PATCH
+          path: /v1/users/{id}
+          authorizer:
+            name: firebaseJwtAuthorizer
+
+  usersDelete:
+    handler: src/routes/users.remove
+    events:
+      - httpApi:
+          method: DELETE
+          path: /v1/users/{id}
+          authorizer:
+            name: firebaseJwtAuthorizer

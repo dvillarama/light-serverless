@@ -1,0 +1,31 @@
+# keep the zip file small by removing uncessary files as possible.
+
+exclude:
+  - ./*.md
+  - ./*.yaml
+  - ./node_modules/.bin/**
+  - database.json
+  - migrations/**
+  - node_modules/**/aws-sdk/**
+  - node_modules/bunyan/bin/**
+  - node_modules/aws-sdk/**
+  - node_modules/**/*.md
+  - node_modules/**/ChangeLog*
+  - node_modules/**/CHANGElOG*
+  - node_modules/**/test/**
+  - node_modules/**/LICENSE*
+  - node_modules/**/AUTHORS*
+  - node_modules/**/Makefile*
+  - node_modules/**/CopyrightNotice.txt*
+  - node_modules/**/License*
+  - node_modules/**/examples/**
+  - docs/**
+  - logs/**
+  - test/**
+  - tests/**
+  - mock/**
+  - shared/**
+  - examples/**
+  - .env
+  - yarn-error.log
+  - yarn.lock

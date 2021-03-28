@@ -1,0 +1,2 @@
+SITE: ${self:custom.site}
+NODE_ENV: ${self:provider.stage}
