@@ -27,8 +27,8 @@ Note: `Invoke Local` is when you are testing the code directly from your compute
 
 # Code Layers
 `serverless.yaml` contains definitions for the gateway, authorizer and the endpoints.  The
-enpoints point to the entry point in the code.  For this project, it goes to the
-`routes/<entity>`.
+endpoints point to the entry point in the code.  For this project, it goes to the
+`routes/user.<method>`.
 
 The `routes` validates all parameters passed through the endpoints.  Any unexpected or
 missing parameter returns an error.
